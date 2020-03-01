@@ -1,0 +1,4 @@
+https://github.com/uwm-workshops/metody-inzynierii-wiedzy
+
+https://github.com/uwm-workshops/metody-inzynierii-wiedzy/tree/master/01%20Wprowadzenie%20do%20Python
+https://github.com/uwm-workshops/metody-inzynierii-wiedzy/tree/master/02%20Wprowadzenie%20do%20Python
