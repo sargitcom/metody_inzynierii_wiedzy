@@ -1,2 +1,21 @@
 <?php
 
+require_once(__DIR__ . '/vendor/autoload.php');
+require_once(__DIR__ . '/functions.php');
+
+$directedGraph = new Structures_Graph(true);
+
+$nodes = [];
+$values = [];
+
+$rootIndex = 'n0';
+
+$values[$rootIndex] = 0;
+$nodes[$rootIndex] = new Structures_Graph_Node();
+$nodes[$rootIndex]->setMetadata('points',$values[$rootIndex]);
+
+$directedGraph->addNode($nodes[$rootIndex]);
+
+generateNodes($nodes, $values, $directedGraph,0, $rootIndex);
+
+minMax($nodes[$rootIndex]);
