@@ -41,7 +41,7 @@ function generateNodes(&$nodes, &$values, &$graph, $points = 0, $currentNodeInde
     generateNodes($nodes,$values, $graph, $index4value, $index4);
     generateNodes($nodes,$values, $graph, $index6value, $index6);
 }
-
+/*
 function minMax(Structures_Graph_Node $rootNode, bool $protagonistStarts = true)
 {
     echo "Start MinMaxAlgorithm\n\n";
@@ -88,6 +88,7 @@ function minMax(Structures_Graph_Node $rootNode, bool $protagonistStarts = true)
     echo "Gracz: " . $currentPlayer . "\n";
     echo "Aktualne punkty: " . $finishValue . "\n";
 }
+*/
 
 function calculateMinMax(Structures_Graph_Node $rootNode, bool $protagonistStarts = true)
 {

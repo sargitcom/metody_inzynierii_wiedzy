@@ -21,3 +21,7 @@ generateNodes($nodes, $values, $directedGraph,0, $rootIndex);
 $result =  calculateMinMax($nodes[$rootIndex], true);
 
 echo "Wynik dla PROTAGONISTY to: " . $result;
+
+$result =  calculateMinMax($nodes[$rootIndex], false);
+
+echo "Wynik dla ANTAGONISTY to: " . $result;
