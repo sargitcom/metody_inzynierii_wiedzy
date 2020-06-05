@@ -41,82 +41,42 @@ function generateNodes(&$nodes, &$values, &$graph, $points = 0, $currentNodeInde
     generateNodes($nodes,$values, $graph, $index4value, $index4);
     generateNodes($nodes,$values, $graph, $index6value, $index6);
 }
-/*
-function minMax(Structures_Graph_Node $rootNode, bool $protagonistStarts = true)
-{
-    echo "Start MinMaxAlgorithm\n\n";
-
-    $currentNode = $rootNode;
-
-    $currentPoints = 0;
-    $currentPlayer = $protagonistStarts ? "PROTAGONIST" : "ANTAGONIST";
-
-    do {
-        echo "Gracz: " . $currentPlayer . "\n";
-        echo "Aktualne punkty: " . $currentPoints . "\n";
-
-        $nodeNeighbours = $currentNode->getNeighbours();
-
-            $selectedNeighbour = null;
-
-            $selectedValue = null;
-
-            foreach ($nodeNeighbours as $neighbour) {
-
-                if ($currentPlayer === "PROTAGONIST") {
-                    if ($selectedNeighbour === null || (int)$neighbour->getMetadata('points') > $selectedValue) {
-                        $selectedNeighbour = $neighbour;
-                        $selectedValue = (int)$selectedNeighbour->getMetadata('points');
-                    }
-                } else {
-                    if ($selectedNeighbour === null || (int)$neighbour->getMetadata('points') < $selectedValue) {
-                        $selectedNeighbour = $neighbour;
-                    }
-                }
-            }
-
-            $currentNode = $selectedNeighbour;
-
-        $currentPoints = (int)$selectedNeighbour->getMetadata('points');
-
-        $currentPlayer = $currentPlayer === "PROTAGONIST" ? "ANTAGONIST" : "PROTAGONIST";
-
-    } while ($currentPoints <= 21);
-
-    $finishValue = (int)$currentNode->getMetadata('points');
-
-    echo "Gracz: " . $currentPlayer . "\n";
-    echo "Aktualne punkty: " . $finishValue . "\n";
-}
-*/
 
 function calculateMinMax(Structures_Graph_Node $rootNode, bool $protagonistStarts = true)
 {
-    if (count($rootNode->getNeighbours()) === 0) {
-        $wartosc = (int)$rootNode->getMetadata('points');
-        return $wartosc;
+    $value = (int)$rootNode->getMetadata('points');
+
+    if (count($rootNode->getNeighbours()) === 0 || $value >= 21) {
+
+        echo "Wybranie węzła końcowego przez: " . ($protagonistStarts ? "PROTAGONISTĘ" : "ANTAGONISTĘ") . "\n";
+
+        return $value;
     }
 
     if ($protagonistStarts) {
         $maxEval = null;
+
+        echo "Szukanie węzła o najniższej wartości przez: " . (!$protagonistStarts ? "PROTAGONISTĘ" : "ANTAGONISTĘ") . "\n";
 
         foreach ($rootNode->getNeighbours() as $neigbour) {
             $eval = calculateMinMax($neigbour, false);
             $maxEval = $maxEval === null ? $eval : max($maxEval, $eval);
         }
 
-        echo "PROT: " . $maxEval . "\n";
+        echo "Wybrano węzeł o wartości: " . $maxEval . "\n";
 
         return $maxEval;
     } else {
         $maxEval = null;
+
+        echo "Szukanie węzła o najwyższej wartości przez: " . (!$protagonistStarts ? "PROTAGONISTĘ" : "ANTAGONISTĘ") . "\n";
 
         foreach ($rootNode->getNeighbours() as $neigbour) {
             $eval = calculateMinMax($neigbour, true);
             $maxEval = $maxEval === null ? $eval : min($maxEval, $eval);
         }
 
-        echo "ANT: " . $maxEval . "\n";
+        echo "Wybrano węzeł o wartości: " . $maxEval . "\n";
 
         return $maxEval;
     }
