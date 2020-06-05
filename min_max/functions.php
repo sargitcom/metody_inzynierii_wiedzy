@@ -6,7 +6,7 @@ function generateNodes(&$nodes, &$values, &$graph, $points = 0, $currentNodeInde
         return;
     }
 
-    echo $currentNodeIndex . "\n";
+    //echo $currentNodeIndex . "\n";
 
     $index3 = $currentNodeIndex . '4';
     $index4 = $currentNodeIndex . '5';
@@ -36,9 +36,6 @@ function generateNodes(&$nodes, &$values, &$graph, $points = 0, $currentNodeInde
     $nodes[$currentNodeIndex]->connectTo($nodes[$index3]);
     $nodes[$currentNodeIndex]->connectTo($nodes[$index4]);
     $nodes[$currentNodeIndex]->connectTo($nodes[$index6]);
-
-    //var_dump($nodes[$currentNodeIndex]->getNeighbours());
-    //die;
 
     generateNodes($nodes,$values, $graph, $index3value, $index3);
     generateNodes($nodes,$values, $graph, $index4value, $index4);
@@ -90,4 +87,36 @@ function minMax(Structures_Graph_Node $rootNode, bool $protagonistStarts = true)
 
     echo "Gracz: " . $currentPlayer . "\n";
     echo "Aktualne punkty: " . $finishValue . "\n";
+}
+
+function calculateMinMax(Structures_Graph_Node $rootNode, bool $protagonistStarts = true)
+{
+    if (count($rootNode->getNeighbours()) === 0) {
+        $wartosc = (int)$rootNode->getMetadata('points');
+        return $wartosc;
+    }
+
+    if ($protagonistStarts) {
+        $maxEval = null;
+
+        foreach ($rootNode->getNeighbours() as $neigbour) {
+            $eval = calculateMinMax($neigbour, false);
+            $maxEval = $maxEval === null ? $eval : max($maxEval, $eval);
+        }
+
+        echo "PROT: " . $maxEval . "\n";
+
+        return $maxEval;
+    } else {
+        $maxEval = null;
+
+        foreach ($rootNode->getNeighbours() as $neigbour) {
+            $eval = calculateMinMax($neigbour, true);
+            $maxEval = $maxEval === null ? $eval : min($maxEval, $eval);
+        }
+
+        echo "ANT: " . $maxEval . "\n";
+
+        return $maxEval;
+    }
 }

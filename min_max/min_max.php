@@ -18,4 +18,6 @@ $directedGraph->addNode($nodes[$rootIndex]);
 
 generateNodes($nodes, $values, $directedGraph,0, $rootIndex);
 
-minMax($nodes[$rootIndex]);
+$result =  calculateMinMax($nodes[$rootIndex], true);
+
+echo "Wynik dla PROTAGONISTY to: " . $result;
